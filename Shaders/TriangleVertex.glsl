@@ -1,19 +1,18 @@
-#version 330 core // Specify GLSL's version
+#version 330 core
 
-layout(location = 0) in vec3 InPosition; // Create layout 0
-layout(location = 1) in vec3 InColor;	 // Create layout 1
-layout(location = 2) in vec2 InUV;		 // Create layout 2
+layout(location = 0) in vec3 InPosition;
+layout(location = 1) in vec3 InColor;
+layout(location = 2) in vec2 InUV;
 
-out vec3 Color; // Variable created to output Color
-out vec2 UV;	// Variable created to output Texture
+out vec3 Color;
+out vec2 UV;
 
-uniform mat4 ModelViewProjection; // Use MVP in shader program with uniform
+uniform mat4 ModelViewProjection;
 
 void main()
 {
+	gl_Position = ModelViewProjection * vec4(InPosition, 1.0);
 
-	Color = InColor; // Send color to fragment shader
-	UV = InUV;		 // Send texture to fragment shader
-
-	gl_Position = ModelViewProjection * vec4(InPosition, 1.0); // Send vertice's position to fragment shader
+	Color = InColor;
+	UV = InUV;
 }

@@ -1,9 +1,0 @@
-# Directories
-.vs/*
-x64/*
-EarthGL/x64/*
-Dependencies/*
-
-# Files
-*.ico
-*.user

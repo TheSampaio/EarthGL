@@ -1,4 +1,0 @@
-﻿  glad.c
-  Main.cpp
-D:\Source\EarthGL\EarthGL\Source\Main.cpp(301,44): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  EarthGL.vcxproj -> D:\Source\EarthGL\x64\Debug\EarthGL.exe

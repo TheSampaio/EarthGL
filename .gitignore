@@ -8,4 +8,4 @@ Dependencies/*
 # Files
 *.ico
 *.user
-# glad.c
+glad.c

@@ -1,6 +1,7 @@
 <h1>EarthGL</h1>
 <section>
     This project is being developed for that I can practice everything I learned from my studies about OpenGL. My goal is to reproduce the planet earth's view in space. I'll use <a href="https://www.glfw.org/download.html">GLFW</a>, <a href="https://glad.dav1d.de/">GLAD</a>, <a href="https://glm.g-truc.net/0.9.9/">GLM</a>, <a href="https://github.com/nothings/stb">STB</a> and C/C++ to be able to use OpenGL and finish the project.
+    <br>
     <img src="EarthGL/Textures/showcase-earthgl.png">
 </section>
 <br>

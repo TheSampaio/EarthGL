@@ -584,9 +584,7 @@ int main()
 	glDepthFunc(GL_LESS);
 
 	// Define light point
-	DirectionalLight Light;
-	Light.Direction = glm::vec3{ -0.8f, -0.5f, -1.0f };
-	Light.Intensity = 1.4f;
+	DirectionalLight Light{ glm::vec3{ -0.8f, -0.5f, -1.0f }, 1.0f };
 
 	// Get delta time - #1
 	double PreviousTime, CurrentTime, DeltaTime;
@@ -612,7 +610,7 @@ int main()
 		glm::mat4 ModelViewProjection = ViewProjectionMatrix * ModelMatrix;
 
 		GLuint TimeLoc = glGetUniformLocation(ProgramID, "Time");
-		glUniform1f(TimeLoc, CurrentTime);
+		glUniform1f(TimeLoc, static_cast<GLfloat>(CurrentTime));
 
 		// Get ModelViewProjection uniform from the shader program
 		GLuint ModelViewProjectionLoc = glGetUniformLocation(ProgramID, "ModelViewProjection");

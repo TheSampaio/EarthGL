@@ -1,11 +1,11 @@
 # Directories
 .vs/
 .vscode/
-x64/
-EarthGL/x64/
-_Dependencies/
+_Output/
+Vendor/
 
 # Files
-*.ico
+*.filters
 *.user
-glad.c
+*.sln
+*.vcxproj

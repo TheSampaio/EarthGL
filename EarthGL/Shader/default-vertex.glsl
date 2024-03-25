@@ -1,9 +1,11 @@
-#version 330 core // Specify GLSL's version
+// Specifies GLSL's version
+#version 330 core
 
-layout(location = 0) in vec3 InPosition; // Create layout 0
+// Specifies input layouts
+layout(location = 0) in vec3 InPosition;
 layout(location = 1) in vec3 InNormal;
-layout(location = 2) in vec3 InColor;	 // Create layout 2
-layout(location = 3) in vec2 InUV;		 // Create layout 3
+layout(location = 2) in vec3 InColor;
+layout(location = 3) in vec2 InUV;
 
 out vec3 Normal;
 out vec3 Color; // Variable created to output Color

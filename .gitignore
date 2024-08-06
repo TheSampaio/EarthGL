@@ -1,8 +1,8 @@
 # Directories
 .vs/
 .vscode/
-_Output/
-Vendor/
+build/
+vendor/
 
 # Files
 *.filters

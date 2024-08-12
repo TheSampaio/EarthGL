@@ -3,6 +3,7 @@
 #include "Application.hpp"
 #include "Debug.hpp"
 #include "Game.hpp"
+#include "Graphics.hpp"
 #include "Input.hpp"
 #include "Window.hpp"
 
@@ -26,13 +27,20 @@ void Application::IRun(Game& game)
     if (!Window::GetInstance().Create())
         Debug::Console("[ERRO] Failed to create the window.");
 
+    if (!Graphics::GetInstance().Initialize())
+        Debug::Console("[ERRO] Failed to initialize GLEW.");
+
     game.OnStart();
 
     do
     {
         Input::GetInstance().PollEvents();
         game.OnUpdate();
+
+        Graphics::GetInstance().ClearBuffers();
         game.OnDraw();
+        
+        Graphics::GetInstance().SwapBuffers(Window::GetInstance());
 
     } while (!Window::Close());
     

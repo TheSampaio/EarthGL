@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EARTHGL_DEBUG
+#define EARTHGL_DEBUG
 
 class Debug
 {
@@ -8,7 +9,12 @@ public:
 private:
     Debug() {};
 
+    Debug(const Debug&) = delete;
+    Debug operator=(const Debug&) = delete;
+
     void IConsole(const string& text, bool bBreakLine = true);
 
     static Debug& GetInstance() { static Debug sInstance; return sInstance; }
 };
+
+#endif

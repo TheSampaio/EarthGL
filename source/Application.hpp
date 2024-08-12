@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EARTHGL_APPLICATION
+#define EARTHGL_APPLICATION
 
 class Game;
 
@@ -13,7 +14,12 @@ private:
     Application();
     ~Application();
 
+    Application(const Application&) = delete;
+    Application operator=(const Application&) = delete;
+
     void IRun(Game& game);
 
     static Application& GetInstance() { static Application sInstance; return sInstance; }
 };
+
+#endif

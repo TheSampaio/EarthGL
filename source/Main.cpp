@@ -20,7 +20,7 @@ private:
 Sandbox::Sandbox()
 {
     Window::SetSize(1280, 720);
-    Window::SetTitle("Sandbox");
+    Window::SetTitle("EarthGL");
 }
 
 void Sandbox::OnStart()

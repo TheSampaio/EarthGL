@@ -44,3 +44,10 @@ add_custom_command(
         "${CMAKE_CURRENT_LIST_DIR}/vendor/glew/bin/Release/x64/glew32.dll"
         "${CMAKE_CURRENT_BINARY_DIR}/Debug"
 )
+
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        "${CMAKE_CURRENT_LIST_DIR}/vendor/glew/bin/Release/x64/glew32.dll"
+        "${CMAKE_CURRENT_BINARY_DIR}/Release"
+)

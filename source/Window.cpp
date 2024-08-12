@@ -24,6 +24,8 @@ bool Window::Create()
         nullptr
     );
 
+    glfwMakeContextCurrent(m_pId);
+
     return (m_pId) ? true : false;
 }
 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EARTHGL_GAME
+#define EARTHGL_GAME
 
 class Game
 {
@@ -8,3 +9,5 @@ public:
     virtual void OnDraw() = 0;
     virtual void OnFinalize() = 0;
 };
+
+#endif

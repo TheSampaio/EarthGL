@@ -3,6 +3,7 @@ project("EarthGL")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(
     GLOB_RECURSE
@@ -12,6 +13,7 @@ file(
 
 include_directories(
     "vendor/spdlog/include"
+    "vendor/stb"
     "vendor/glew/include"
     "vendor/glfw/include"
     "vendor/glm"

@@ -23,8 +23,8 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indic
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
     glEnableVertexAttribArray(0);
 
-    // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(static_cast<llong>(offsetof(Vertex, Vertex::colour))));
-    // glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(static_cast<llong>(offsetof(Vertex, Vertex::texture))));
+    glEnableVertexAttribArray(1);
 }
 
 void Mesh::Draw(const GLuint& shader)

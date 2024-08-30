@@ -2,7 +2,10 @@
 .vs/
 .vscode/
 build/
-vendor/
+
+# Temporary
+vendor/glew
+vendor/glfw
 
 # Files
 *.filters

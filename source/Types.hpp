@@ -14,9 +14,10 @@ typedef unsigned long long ullong;
 
 struct Vertex
 {
-    Vertex(glm::vec3 position);
+    Vertex(glm::vec3 position, glm::vec2 texture);
 
     glm::vec3 position;
+    glm::vec2 texture;
 };
 
 #endif

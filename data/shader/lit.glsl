@@ -2,9 +2,9 @@
 #version 330
 
 layout(location = 0) in vec3 iPosition;
-layout(location = 1) in vec3 iColour;
+layout(location = 1) in vec2 iTexture;
 
-out vec3 vColour;
+out vec2 vTexture;
 
 uniform mat4 uModel;
 uniform mat4 uView;
@@ -12,17 +12,19 @@ uniform mat4 uProjection;
 
 void main()
 {
-    vColour = iColour;
+    vTexture = iTexture;
     gl_Position = uProjection * uView * uModel * vec4(iPosition, 1.0);
 }
 
 #shader fragment
 #version 330
 
-in vec3 vColour;
+in vec2 vTexture;
 out vec4 oFragment;
+
+uniform sampler2D uDiffuseSampler;
 
 void main()
 {
-    oFragment = vec4(vColour, 1.0);
+    oFragment = texture(uDiffuseSampler, vTexture);
 }

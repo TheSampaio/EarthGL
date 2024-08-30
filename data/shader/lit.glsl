@@ -6,10 +6,14 @@ layout(location = 1) in vec3 iColour;
 
 out vec3 vColour;
 
+uniform mat4 uModel;
+uniform mat4 uView;
+uniform mat4 uProjection;
+
 void main()
 {
     vColour = iColour;
-    gl_Position = vec4(iPosition, 1.0);
+    gl_Position = uProjection * uView * uModel * vec4(iPosition, 1.0);
 }
 
 #shader fragment

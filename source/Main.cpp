@@ -26,7 +26,7 @@ private:
 Sandbox::Sandbox()
     : mEarth(nullptr)
 {
-    Window::SetSize(800, 800);
+    Window::SetSize(800, 600);
     Window::SetTitle("EarthGL");
 
     Graphics::SetBackgroundColour(40, 40, 40);
@@ -56,6 +56,21 @@ void Sandbox::OnStart()
 
 void Sandbox::OnUpdate()
 {
+    glm::mat4 model = glm::mat4(1.f);
+    glm::mat4 view = glm::mat4(1.f);
+    glm::mat4 projection = glm::mat4(1.f);
+
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -2.0f));
+
+    float aspect = static_cast<float>(Window::GetSize()[0]) / static_cast<float>(Window::GetSize()[1]);
+    projection = glm::perspective(glm::radians(60.0f), aspect, 0.1f, 100.0f);
+
+    glUseProgram(Renderer::GetShaderProgram());
+
+    glUniformMatrix4fv(glGetUniformLocation(Renderer::GetShaderProgram(), "uModel"), 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(glGetUniformLocation(Renderer::GetShaderProgram(), "uView"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(Renderer::GetShaderProgram(), "uProjection"), 1, GL_FALSE, glm::value_ptr(projection));
 }
 
 void Sandbox::OnDraw()

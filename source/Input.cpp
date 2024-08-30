@@ -6,6 +6,7 @@
 
 static void OnFramebufferResize(GLFWwindow* window, int width, int height)
 {
+    Window::SetSize(width, height);
     glViewport(0, 0, width, height);
 }
 

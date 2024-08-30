@@ -65,7 +65,7 @@ EShaderSource Renderer::Parse(const string &filepath)
     }
 
     else
-        Debug::Console(Error, "Failed to locate shader file.");
+        Debug::Console(Warning, "Failed to locate shader file.");
 
     return { source[0].str(), source[1].str() };
 }

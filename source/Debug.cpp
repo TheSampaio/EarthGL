@@ -1,7 +1,25 @@
 #include "PCH.hpp"
 #include "Debug.hpp"
 
-void Debug::IConsole(const std::string& text, bool bBreakLine)
+Debug::Debug()
 {
-    (bBreakLine) ? std::cout << text.c_str() << std::endl : std::cout << text.c_str();
+    spdlog::set_pattern("%^[%T] %v%$");
+}
+
+void Debug::IConsole(EDebugMode mode, const std::string& text)
+{
+    switch (mode)
+    {
+        case Error:
+            spdlog::error(text);
+            break;
+
+        case Information:
+            spdlog::info(text);
+            break;
+
+        case Warning:
+            spdlog::warn(text);
+            break;
+    }
 }

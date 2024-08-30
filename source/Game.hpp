@@ -1,5 +1,5 @@
-#ifndef EARTHGL_GAME
-#define EARTHGL_GAME
+#ifndef _EARTHGL_GAME_
+#define _EARTHGL_GAME_
 
 class Game
 {

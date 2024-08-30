@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project("EarthGL")
 
-set(CXX_STANDARD, 20)
-set(CXX_STANDARD_REQUIRED, 20)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(
     GLOB_RECURSE
@@ -11,8 +11,10 @@ file(
 )
 
 include_directories(
+    "vendor/spdlog/include"
     "vendor/glew/include"
     "vendor/glfw/include"
+    "vendor/glm"
 )
 
 add_executable(

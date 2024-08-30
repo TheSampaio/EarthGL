@@ -3,6 +3,9 @@
 #include "Application.hpp"
 #include "Debug.hpp"
 #include "Game.hpp"
+#include "Graphics.hpp"
+#include "Mesh.hpp"
+#include "Renderer.hpp"
 #include "Window.hpp"
 
 class Sandbox : public Game
@@ -10,22 +13,45 @@ class Sandbox : public Game
 public:
     Sandbox();
 
+protected:
+    void OnStart() override;
+    void OnUpdate() override;
+    void OnDraw() override;
+    void OnFinalize() override;
+
 private:
-    virtual void OnStart() override;
-    virtual void OnUpdate() override;
-    virtual void OnDraw() override;
-    virtual void OnFinalize() override;
+    Mesh* mEarth;
 };
 
 Sandbox::Sandbox()
+    : mEarth(nullptr)
 {
-    Window::SetSize(1280, 720);
+    Window::SetSize(800, 800);
     Window::SetTitle("EarthGL");
+
+    Graphics::SetBackgroundColour(40, 40, 40);
+    Graphics::SetVerticalSynchronization(false);
 }
 
 void Sandbox::OnStart()
 {
-    Debug::Console("[INFO] Started.");
+    Debug::Console(Information, "The application was started.");
+
+    const std::vector<Vertex> vertices
+    {
+        { glm::vec3{ -0.5f,  0.5f,  0.0f } },
+        { glm::vec3{  0.5f,  0.5f,  0.0f } },
+        { glm::vec3{ -0.5f, -0.5f,  0.0f } },
+        { glm::vec3{  0.5f, -0.5f,  0.0f } },
+    };
+
+    const std::vector<GLuint> indices
+    {
+        0, 1, 2,
+        2, 1, 3
+    };
+
+    mEarth = new Mesh(vertices, indices);
 }
 
 void Sandbox::OnUpdate()
@@ -34,11 +60,12 @@ void Sandbox::OnUpdate()
 
 void Sandbox::OnDraw()
 {
+    mEarth->Draw(Renderer::GetShaderProgram());
 }
 
 void Sandbox::OnFinalize()
 {
-    Debug::Console("[INFO] Finalized.");
+    Debug::Console(Information, "The application was finalized.");
 }
 
 int main()

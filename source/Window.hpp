@@ -1,5 +1,5 @@
-#ifndef EARTHGL_WINDOW
-#define EARTHGL_WINDOW
+#ifndef _EARTHGL_WINDOW_
+#define _EARTHGL_WINDOW_
 
 class Application;
 
@@ -7,6 +7,10 @@ class Window
 {
 public:
     static GLFWwindow* GetId() { return GetInstance().m_pId; }
+
+    static string GetTitle() { return GetInstance().m_Title; }
+
+    static array<ushort, 2> GetSize() { return GetInstance().m_Size; }
 
     static void SetSize(const ushort width, const ushort height) { GetInstance().m_Size = { width, height }; }
 
@@ -18,8 +22,8 @@ public:
 
 private:
     GLFWwindow* m_pId;
-    array<ushort, 2> m_Size;
     string m_Title;
+    array<ushort, 2> m_Size;
 
     Window();
     ~Window();

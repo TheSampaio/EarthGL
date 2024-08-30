@@ -1,7 +1,8 @@
-#ifndef EARTHGL_INPUT
-#define EARTHGL_INPUT
+#ifndef _EARTHGL_INPUT_
+#define _EARTHGL_INPUT_
 
 class Application;
+class Window;
 
 class Input
 {

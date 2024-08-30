@@ -5,13 +5,14 @@
 #include "Game.hpp"
 #include "Graphics.hpp"
 #include "Input.hpp"
+#include "Renderer.hpp"
 #include "Window.hpp"
 
 Application::Application()
     : m_pGame(nullptr)
 {
     if (glfwInit() != GLFW_TRUE)
-        Debug::Console("[ERRO] Failed to initialize GLFW.");
+        Debug::Console(Error, "Failed to initialize GLFW.");
 }
 
 Application::~Application()
@@ -22,25 +23,34 @@ Application::~Application()
 
 void Application::IRun(Game& game)
 {
+    Input& input = Input::GetInstance();
+    Window& window = Window::GetInstance();
+    Graphics& graphics = Graphics::GetInstance();
+    Renderer& renderer = Renderer::GetInstance();
+
     m_pGame = &game;
 
-    if (!Window::GetInstance().Create())
-        Debug::Console("[ERRO] Failed to create the window.");
+    if (!window.Create())
+        Debug::Console(Error, "Failed to create the window.");
 
-    if (!Graphics::GetInstance().Initialize())
-        Debug::Console("[ERRO] Failed to initialize GLEW.");
+    if (!graphics.Initialize())
+        Debug::Console(Error, "Failed to initialize GLEW.");
+
+    renderer.Initialize();
+
+    graphics.CreateViewport(window);
 
     game.OnStart();
 
     do
     {
-        Input::GetInstance().PollEvents();
+        input.PollEvents();
         game.OnUpdate();
 
-        Graphics::GetInstance().ClearBuffers();
+        graphics.ClearBuffers();
         game.OnDraw();
         
-        Graphics::GetInstance().SwapBuffers(Window::GetInstance());
+        graphics.SwapBuffers(window);
 
     } while (!Window::Close());
     

@@ -65,6 +65,8 @@ void Sandbox::OnDraw()
 
 void Sandbox::OnFinalize()
 {
+    delete mEarth;
+
     Debug::Console(Information, "The application was finalized.");
 }
 

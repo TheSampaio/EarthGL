@@ -17,6 +17,8 @@ bool Graphics::Initialize()
 
 void Graphics::ClearBuffers()
 {
+    glEnable(GL_DEPTH_TEST);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(
         static_cast<GLfloat>(m_BackgoundColour[0] / 255.0f),

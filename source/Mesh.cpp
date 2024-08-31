@@ -1,7 +1,7 @@
 #include "PCH.hpp"
 #include "Mesh.hpp"
 
-Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices)
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<glm::uvec3>& indices)
 {
     mVertices = vertices;
     mIndices = indices;
@@ -18,7 +18,7 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indic
     // EBO
     glGenBuffers(1, &mEBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(GLuint), mIndices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * 3 * sizeof(GLuint), mIndices.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
     glEnableVertexAttribArray(0);
@@ -31,5 +31,5 @@ void Mesh::Draw(const GLuint& shader)
 {
     glUseProgram(shader);
     glBindVertexArray(mVAO);
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size()), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size() * 3), GL_UNSIGNED_INT, nullptr);
 }

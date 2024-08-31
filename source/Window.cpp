@@ -2,34 +2,42 @@
 #include "Window.hpp"
 
 Window::Window()
-    : m_pId(nullptr)
+    : mpId(nullptr)
 {
-    m_Size = { 800, 600 };
-    m_Title = "Window";
+    mSize = { 800, 600 };
+    mTitle = "Window";
 }
 
 Window::~Window()
 {
-    if (m_pId)
-        glfwDestroyWindow(m_pId);
+    if (mpId)
+        glfwDestroyWindow(mpId);
 }
 
 bool Window::Create()
 {
-    m_pId = glfwCreateWindow(
-        m_Size[0],
-        m_Size[1],
-        m_Title.c_str(),
+    // Set-up OpenGL's version
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
+	// Set-up OpenGL's compatibility mode
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
+
+    mpId = glfwCreateWindow(
+        mSize[0],
+        mSize[1],
+        mTitle.c_str(),
         nullptr,
         nullptr
     );
 
-    glfwMakeContextCurrent(m_pId);
+    glfwMakeContextCurrent(mpId);
 
-    return (m_pId) ? true : false;
+    return (mpId) ? true : false;
 }
 
 bool Window::IClose()
 {
-    return glfwWindowShouldClose(m_pId);
+    return glfwWindowShouldClose(mpId);
 }

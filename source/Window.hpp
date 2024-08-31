@@ -6,25 +6,26 @@ class Application;
 class Window
 {
 public:
-    static GLFWwindow* GetId() { return GetInstance().m_pId; }
+    static GLFWwindow* GetId() { return GetInstance().mpId; }
 
-    static string GetTitle() { return GetInstance().m_Title; }
+    static string GetTitle() { return GetInstance().mTitle; }
 
-    static array<ushort, 2> GetSize() { return GetInstance().m_Size; }
+    static array<ushort, 2> GetSize() { return GetInstance().mSize; }
 
-    static void SetSize(const ushort width, const ushort height) { GetInstance().m_Size = { width, height }; }
+    static void SetSize(const ushort width, const ushort height) { GetInstance().mSize = { width, height }; }
 
-    static void SetTitle(const string& title) { GetInstance().m_Title = title; }
+    static void SetTitle(const string& title) { GetInstance().mTitle = title; }
 
     static bool Close() { return GetInstance().IClose(); }
 
     friend Application;
 
 private:
-    GLFWwindow* m_pId;
-    string m_Title;
-    array<ushort, 2> m_Size;
+    GLFWwindow* mpId;
 
+    string mTitle;
+    array<ushort, 2> mSize;
+    
     Window();
     ~Window();
 

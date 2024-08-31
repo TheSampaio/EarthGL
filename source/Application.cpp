@@ -12,7 +12,7 @@ Application::Application()
     : m_pGame(nullptr)
 {
     if (glfwInit() != GLFW_TRUE)
-        Debug::Console(Error, "Failed to initialize GLFW.");
+        Debug::Console(Warning, "Failed to initialize GLFW.");
 }
 
 Application::~Application()
@@ -23,10 +23,10 @@ Application::~Application()
 
 void Application::IRun(Game& game)
 {
-    Input& input = Input::GetInstance();
-    Window& window = Window::GetInstance();
     Graphics& graphics = Graphics::GetInstance();
+    Input& input = Input::GetInstance();
     Renderer& renderer = Renderer::GetInstance();
+    Window& window = Window::GetInstance();
 
     m_pGame = &game;
 

@@ -4,13 +4,13 @@
 class Mesh
 {
 public:
-    Mesh(const std::vector<Vertex>& vertices, const std::vector<GLuint>& indices);
+    Mesh(const std::vector<Vertex>& vertices, const std::vector<glm::uvec3>& indices);
 
     void Draw(const GLuint& shader);
 
 private:
     std::vector<Vertex> mVertices;
-    std::vector<GLuint> mIndices;
+    std::vector<glm::uvec3> mIndices;
     GLuint mVAO, mVBO, mEBO;
 };
 

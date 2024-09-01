@@ -22,9 +22,15 @@ void main()
 in vec2 vTexture;
 out vec4 oFragment;
 
-uniform sampler2D uDiffuseSampler;
+uniform sampler2D uBathy2D;
+uniform sampler2D uShallow2D;
+uniform sampler2D uClouds2D;
 
 void main()
 {
-    oFragment = texture(uDiffuseSampler, vTexture);
+    vec4 bathy = texture(uBathy2D, vTexture);
+    vec4 shallow = texture(uShallow2D, vTexture);
+    vec4 clouds = texture(uClouds2D, vTexture);
+    
+    oFragment = mix(bathy, shallow, 0.6) + clouds;
 }

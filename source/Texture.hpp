@@ -4,7 +4,7 @@
 class Texture
 {
 public:
-    Texture(const std::string& filePath, GLenum format = GL_RGB, GLenum slot = GL_TEXTURE0, GLenum filter = GL_LINEAR);
+    Texture(const std::string& filePath, GLenum format, GLenum slot, GLenum filter = GL_LINEAR);
     ~Texture();
 
     // Binds the texture
@@ -21,9 +21,10 @@ public:
 
 private:
     // Attributes
-	GLuint mId, mSlot;
-	std::array<GLint, 2> mSize;
+	GLuint mId;
+    GLenum mSlot;
     GLint mColumn;
+	std::array<GLint, 2> mSize;
 };
 
 #endif

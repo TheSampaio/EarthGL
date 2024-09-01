@@ -1,6 +1,8 @@
 #include "PCH.hpp"
 #include "Texture.hpp"
 
+#include "Debug.hpp"
+
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 	#include <stb_image.h>
@@ -8,11 +10,13 @@
 
 Texture::Texture(const std::string& filepath, GLenum format, GLenum slot, GLenum filter)
 {
+	mSlot = slot;
+
 	// Flips image on load
     stbi_set_flip_vertically_on_load(true);
 
     // Loads a image from disk
-    unsigned char* bytes = stbi_load(filepath.c_str(), &mSize[0], &mSize[1], &mColumn, 0);
+    GLubyte* bytes = stbi_load(filepath.c_str(), &mSize[0], &mSize[1], &mColumn, 0);
 
     glGenTextures(1, &mId);
 

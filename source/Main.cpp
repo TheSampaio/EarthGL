@@ -22,14 +22,15 @@ protected:
 
 private:
     Mesh* mEarthMesh;
-    Texture* mEarthDisffuse;
-    GLuint texture;
+    Texture* mEarthBathy;
+    Texture* mEarthShallow;
+    Texture* mEarthClouds;
 
     void GenerateSphereMesh(GLuint resolution, std::vector<Vertex>& vertices, std::vector<glm::uvec3>& indices);
 };
 
 Sandbox::Sandbox()
-    : mEarthMesh(nullptr), mEarthDisffuse(nullptr)
+    : mEarthMesh(nullptr), mEarthBathy(nullptr), mEarthShallow(nullptr), mEarthClouds(nullptr)
 {
     Window::SetSize(1280, 720);
     Window::SetTitle("EarthGL");
@@ -49,7 +50,9 @@ void Sandbox::OnStart()
 	GenerateSphereMesh(50, vertices, indices);
 
     mEarthMesh = new Mesh(vertices, indices);
-    mEarthDisffuse = new Texture("../../data/texture/diffuse-earth-4k.jpg");
+    mEarthBathy = new Texture("../../data/texture/diffuse-earth-bathy-4k.jpg", GL_RGB, GL_TEXTURE0);
+    mEarthShallow = new Texture("../../data/texture/diffuse-earth-shallow-4k.jpg", GL_RGB, GL_TEXTURE1);
+    mEarthClouds = new Texture("../../data/texture/diffuse-earth-clouds-2k.jpg", GL_RGB, GL_TEXTURE2);
 }
 
 void Sandbox::OnUpdate()
@@ -78,16 +81,23 @@ void Sandbox::OnUpdate()
 
 void Sandbox::OnDraw()
 {
-    glUseProgram(Renderer::GetShaderProgram());
-    glUniform1i(glGetUniformLocation(Renderer::GetShaderProgram(), "uDiffuseSampler"), 0);
-
-    mEarthDisffuse->Bind();
     mEarthMesh->Draw(Renderer::GetShaderProgram());
+
+    glUniform1i(glGetUniformLocation(Renderer::GetShaderProgram(), "uBathy2D"), 0);
+    mEarthBathy->Bind();
+
+    glUniform1i(glGetUniformLocation(Renderer::GetShaderProgram(), "uShallow2D"), 1);
+    mEarthShallow->Bind();
+
+    glUniform1i(glGetUniformLocation(Renderer::GetShaderProgram(), "uClouds2D"), 2);
+    mEarthClouds->Bind();
 }
 
 void Sandbox::OnFinalize()
 {
-    delete mEarthDisffuse;
+    delete mEarthClouds;
+    delete mEarthShallow;
+    delete mEarthBathy;
     delete mEarthMesh;
 
     Debug::Console(Information, "The application was finalized.");

@@ -1,11 +1,14 @@
 # Directories
 .vs/
 .vscode/
-x64/
-EarthGL/x64/
-_Dependencies/
+build/
+
+# Temporary
+vendor/glew
+vendor/glfw
 
 # Files
-*.ico
+*.filters
 *.user
-glad.c
+*.sln
+*.vcxproj

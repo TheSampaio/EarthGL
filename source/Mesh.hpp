@@ -6,7 +6,7 @@ class Mesh
 public:
     Mesh(const std::vector<Vertex>& vertices, const std::vector<glm::uvec3>& indices);
 
-    void Draw(const GLuint& shader);
+    void Draw();
 
 private:
     std::vector<Vertex> mVertices;

@@ -1,5 +1,6 @@
 #include "PCH.hpp"
 #include "Mesh.hpp"
+#include "Renderer.hpp"
 
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<glm::uvec3>& indices)
 {
@@ -27,9 +28,8 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<glm::uvec3>& i
     glEnableVertexAttribArray(1);
 }
 
-void Mesh::Draw(const GLuint& shader)
+void Mesh::Draw()
 {
-    glUseProgram(shader);
     glBindVertexArray(mVAO);
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(mIndices.size() * 3), GL_UNSIGNED_INT, nullptr);
+    Renderer::Draw(mIndices);
 }

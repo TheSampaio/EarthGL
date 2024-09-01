@@ -30,7 +30,7 @@ void main()
 {
     vec4 bathy = texture(uBathy2D, vTexture);
     vec4 shallow = texture(uShallow2D, vTexture);
-    vec4 clouds = texture(uClouds2D, vTexture);
+    vec4 clouds = texture(uClouds2D, vTexture) * 0.8;
     
     oFragment = mix(bathy, shallow, 0.6) + clouds;
 }

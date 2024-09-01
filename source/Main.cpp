@@ -58,7 +58,6 @@ void Sandbox::OnStart()
 void Sandbox::OnUpdate()
 {
     // === 3D stuff ===
-
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
@@ -69,27 +68,26 @@ void Sandbox::OnUpdate()
 
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -24.0f));
 
-    float aspect = static_cast<float>(Window::GetSize()[0]) / static_cast<float>(Window::GetSize()[1]);
+    const float aspect = static_cast<float>(Window::GetSize()[0]) / static_cast<float>(Window::GetSize()[1]);
     projection = glm::perspective(glm::radians(60.0f), aspect, 0.1f, 100.0f);
 
-    glUseProgram(Renderer::GetShaderProgram());
-
-    glUniformMatrix4fv(glGetUniformLocation(Renderer::GetShaderProgram(), "uModel"), 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(glGetUniformLocation(Renderer::GetShaderProgram(), "uView"), 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(glGetUniformLocation(Renderer::GetShaderProgram(), "uProjection"), 1, GL_FALSE, glm::value_ptr(projection));
+    Renderer::UseShaderProgram();
+    Renderer::SetUniformMatrix4fv("uModel", model);
+    Renderer::SetUniformMatrix4fv("uView", view);
+    Renderer::SetUniformMatrix4fv("uProjection", projection);
 }
 
 void Sandbox::OnDraw()
 {
-    mEarthMesh->Draw(Renderer::GetShaderProgram());
+    mEarthMesh->Draw();
 
-    glUniform1i(glGetUniformLocation(Renderer::GetShaderProgram(), "uBathy2D"), 0);
+    Renderer::SetUniform1i("uBathy2D", 0);
     mEarthBathy->Bind();
 
-    glUniform1i(glGetUniformLocation(Renderer::GetShaderProgram(), "uShallow2D"), 1);
+    Renderer::SetUniform1i("uShallow2D", 1);
     mEarthShallow->Bind();
 
-    glUniform1i(glGetUniformLocation(Renderer::GetShaderProgram(), "uClouds2D"), 2);
+    Renderer::SetUniform1i("uClouds2D", 2);
     mEarthClouds->Bind();
 }
 

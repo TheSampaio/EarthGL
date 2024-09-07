@@ -51,8 +51,19 @@ void Graphics::CreateViewport(Window &window)
 
 void Graphics::ISetFaceCulling(bool enable)
 {
-    (enable) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-    
-    glCullFace(GL_FRONT);
-    glFrontFace(GL_CW);
+    if (enable)
+    {
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_FRONT);
+        glFrontFace(GL_CW);
+    }
+
+    else
+        glDisable(GL_CULL_FACE);
+}
+
+void Graphics::ISetAntiAliasing(bool enable)
+{
+    // Enable OpenGL samples
+    (enable) ? glEnable(GL_MULTISAMPLE) : glDisable(GL_MULTISAMPLE);
 }

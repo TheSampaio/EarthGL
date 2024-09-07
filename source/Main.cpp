@@ -34,6 +34,7 @@ private:
 Sandbox::Sandbox()
     : mCamera(nullptr), mEarthMesh(nullptr), mEarthBathy(nullptr), mEarthShallow(nullptr), mEarthClouds(nullptr)
 {
+    Graphics::SetAntiAliasing(true);
     Graphics::SetBackgroundColour(2.0f, 2.0f, 2.0f);
     Graphics::SetVerticalSynchronization(false);
 

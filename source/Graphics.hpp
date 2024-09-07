@@ -9,6 +9,8 @@ class Graphics
 public:
     static void SetBackgroundColour(uchar red, uchar green, uchar blue) { GetInstance().m_BackgoundColour = { red, green, blue }; }
 
+    static void SetFaceCulling(bool enable) { GetInstance().ISetFaceCulling(enable); }
+
     static void SetVerticalSynchronization(bool enable) { GetInstance().m_VerticalSynchronization = enable; }
 
     friend Application;
@@ -26,6 +28,8 @@ private:
     void ClearBuffers();
     void SwapBuffers(Window& window);
     void CreateViewport(Window& window);
+
+    void ISetFaceCulling(bool enable);
 
     static Graphics& GetInstance() { static Graphics sInstance; return sInstance; }
 };

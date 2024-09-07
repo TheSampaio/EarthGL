@@ -2,6 +2,7 @@
 #define _EARTHGL_APPLICATION_
 
 class Game;
+class Timer;
 
 class Application
 {
@@ -9,7 +10,8 @@ public:
     static void Run(Game* pGame) { return GetInstance().IRun(*pGame); }
 
 private:
-    Game* m_pGame;
+    Game* mpGame;
+    Timer* mpTimer;
 
     Application();
     ~Application();

@@ -21,11 +21,17 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<glm::uvec3>& i
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * 3 * sizeof(GLuint), mIndices.data(), GL_STATIC_DRAW);
 
+    // Position
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), nullptr);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(static_cast<llong>(offsetof(Vertex, Vertex::texture))));
+    // Normal
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(static_cast<llong>(offsetof(Vertex, Vertex::normal))));
     glEnableVertexAttribArray(1);
+
+    // Texture
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(static_cast<llong>(offsetof(Vertex, Vertex::texture))));
+    glEnableVertexAttribArray(2);
 }
 
 void Mesh::Draw()

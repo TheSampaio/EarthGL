@@ -48,3 +48,11 @@ void Graphics::CreateViewport(Window &window)
         Debug::Console(Information, std::format("OpenGL: {}\n===", data));
     }
 }
+
+void Graphics::ISetFaceCulling(bool enable)
+{
+    (enable) ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+    
+    glCullFace(GL_FRONT);
+    glFrontFace(GL_CW);
+}

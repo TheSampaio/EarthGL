@@ -6,18 +6,22 @@
 #include "Graphics.hpp"
 #include "Input.hpp"
 #include "Renderer.hpp"
+#include "Timer.hpp"
 #include "Window.hpp"
 
 Application::Application()
-    : m_pGame(nullptr)
+    : mpGame(nullptr), mpTimer(nullptr)
 {
     if (glfwInit() != GLFW_TRUE)
         Debug::Console(Warning, "Failed to initialize GLFW.");
+
+    mpTimer = new Timer();
 }
 
 Application::~Application()
 {
-    delete m_pGame;
+    delete mpGame;
+    delete mpTimer;
     glfwTerminate();
 }
 
@@ -28,7 +32,7 @@ void Application::IRun(Game& game)
     Renderer& renderer = Renderer::GetInstance();
     Window& window = Window::GetInstance();
 
-    m_pGame = &game;
+    mpGame = &game;
 
     if (!window.Create())
         Debug::Console(Error, "Failed to create the window.");
@@ -36,23 +40,24 @@ void Application::IRun(Game& game)
     if (!graphics.Initialize())
         Debug::Console(Error, "Failed to initialize GLEW.");
 
-    renderer.Initialize();
+    if(!renderer.Initialize())
+        Debug::Console(Error, "Failed to initialize the renderer.");
 
     graphics.CreateViewport(window);
-
-    game.OnStart();
+    mpTimer->Start();
+    mpGame->OnStart();
 
     do
     {
         input.PollEvents();
-        game.OnUpdate();
+        mpGame->OnUpdate(mpTimer->Reset());
 
         graphics.ClearBuffers();
-        game.OnDraw();
+        mpGame->OnDraw();
         
         graphics.SwapBuffers(window);
 
     } while (!Window::Close());
     
-    game.OnFinalize();
+    mpGame->OnFinalize();
 }

@@ -7,7 +7,12 @@ class Window;
 class Graphics
 {
 public:
+    // Sets window's anti-aliasing
+	static void SetAntiAliasing(bool enable) { GetInstance().ISetAntiAliasing(enable); }
+
     static void SetBackgroundColour(uchar red, uchar green, uchar blue) { GetInstance().m_BackgoundColour = { red, green, blue }; }
+
+    static void SetFaceCulling(bool enable) { GetInstance().ISetFaceCulling(enable); }
 
     static void SetVerticalSynchronization(bool enable) { GetInstance().m_VerticalSynchronization = enable; }
 
@@ -26,6 +31,9 @@ private:
     void ClearBuffers();
     void SwapBuffers(Window& window);
     void CreateViewport(Window& window);
+
+    void ISetFaceCulling(bool enable);
+    void ISetAntiAliasing(bool enable);
 
     static Graphics& GetInstance() { static Graphics sInstance; return sInstance; }
 };

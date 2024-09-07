@@ -16,6 +16,9 @@ Window::~Window()
 
 bool Window::Create()
 {
+    // Set-up MSAA with eight samples
+    glfwWindowHint(GLFW_SAMPLES, 8);
+
     // Set-up OpenGL's version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

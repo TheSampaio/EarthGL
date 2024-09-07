@@ -1,6 +1,7 @@
 #include "PCH.hpp"
 
 #include "Application.hpp"
+#include "Camera.hpp"
 #include "Debug.hpp"
 #include "Game.hpp"
 #include "Graphics.hpp"
@@ -16,11 +17,12 @@ public:
 
 protected:
     void OnStart() override;
-    void OnUpdate() override;
+    void OnUpdate(float deltaTime) override;
     void OnDraw() override;
     void OnFinalize() override;
 
 private:
+    Camera* mCamera;
     Mesh* mEarthMesh;
     Texture* mEarthBathy;
     Texture* mEarthShallow;
@@ -30,18 +32,22 @@ private:
 };
 
 Sandbox::Sandbox()
-    : mEarthMesh(nullptr), mEarthBathy(nullptr), mEarthShallow(nullptr), mEarthClouds(nullptr)
+    : mCamera(nullptr), mEarthMesh(nullptr), mEarthBathy(nullptr), mEarthShallow(nullptr), mEarthClouds(nullptr)
 {
+    Graphics::SetAntiAliasing(true);
+    Graphics::SetBackgroundColour(2.0f, 2.0f, 2.0f);
+    Graphics::SetVerticalSynchronization(false);
+
     Window::SetSize(1280, 720);
     Window::SetTitle("EarthGL");
-
-    Graphics::SetBackgroundColour(10, 10, 10);
-    Graphics::SetVerticalSynchronization(false);
 }
 
 void Sandbox::OnStart()
 {
     Debug::Console(Information, "The application was started.");
+
+    // Set-up face culling
+    Graphics::SetFaceCulling(true);
 
     // Generates all the sphere's vertices and indices
     std::vector<Vertex> vertices;
@@ -49,36 +55,35 @@ void Sandbox::OnStart()
 
 	GenerateSphereMesh(50, vertices, indices);
 
+    mCamera = new Camera(glm::vec3(0.0f, 0.0f, 500.0f), 60.0f, 0.05f, 1000.0f);
     mEarthMesh = new Mesh(vertices, indices);
     mEarthBathy = new Texture("../../data/texture/diffuse-earth-bathy-4k.jpg", GL_RGB, GL_TEXTURE0);
     mEarthShallow = new Texture("../../data/texture/diffuse-earth-shallow-4k.jpg", GL_RGB, GL_TEXTURE1);
     mEarthClouds = new Texture("../../data/texture/diffuse-earth-clouds-2k.jpg", GL_RGB, GL_TEXTURE2);
 }
 
-void Sandbox::OnUpdate()
+void Sandbox::OnUpdate(float deltaTime)
 {
+    mCamera->Update(deltaTime);
+
     // === 3D stuff ===
     glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = glm::mat4(1.0f);
-    glm::mat4 projection = glm::mat4(1.0f);
 
     model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::rotate(model, glm::radians(200.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::scale(model, 10.0f * glm::vec3(1.0f));
+    model = glm::scale(model, 200.0f * glm::vec3(1.0f));
 
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -24.0f));
-
-    const float aspect = static_cast<float>(Window::GetSize()[0]) / static_cast<float>(Window::GetSize()[1]);
-    projection = glm::perspective(glm::radians(60.0f), aspect, 0.1f, 100.0f);
+    // Creates a normal matrix
+    glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
 
     Renderer::UseShaderProgram();
     Renderer::SetUniformMatrix4fv("uModel", model);
-    Renderer::SetUniformMatrix4fv("uView", view);
-    Renderer::SetUniformMatrix4fv("uProjection", projection);
+    Renderer::SetUniformMatrix4fv("uNormalMatrix", normalMatrix);
 }
 
 void Sandbox::OnDraw()
 {
+    mCamera->Draw();
     mEarthMesh->Draw();
 
     Renderer::SetUniform1i("uBathy2D", 0);
@@ -97,6 +102,7 @@ void Sandbox::OnFinalize()
     delete mEarthShallow;
     delete mEarthBathy;
     delete mEarthMesh;
+    delete mCamera;
 
     Debug::Console(Information, "The application was finalized.");
 }

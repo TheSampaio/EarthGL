@@ -18,7 +18,6 @@ void main()
 {
     vNormal = mat3(uNormalMatrix) * iNormal;
     vTexture = iTexture;
-
     vFragmentPosition = vec3(uModel * vec4(iPosition, 1.0));
 
     gl_Position = uProjection * uView * vec4(vFragmentPosition, 1.0);
@@ -33,6 +32,7 @@ in vec2 vTexture;
 
 out vec4 oFragment;
 
+uniform float uSpeed;
 uniform vec3 uViewPosition;
 uniform sampler2D uBathy2D;
 uniform sampler2D uShallow2D;
@@ -58,7 +58,7 @@ void main()
     light.ambient = vec3(0.0);
     light.diffuse = vec3(1.0);
     light.specular = vec3(0.4);
-    light.direction = vec3(1.0);
+    light.direction = vec3(0.8, 0.0, 1.0);
     
     // Output
     vec4 result = CalculateDirectionalLighting(light, normal, viewDirection);
@@ -68,9 +68,10 @@ void main()
 vec4 CalculateDirectionalLighting(DirecionalLight light, vec3 normal, vec3 viewDirection)
 {
     // Material
+    vec2 cloudsSpeed = vec2(0.004, 0.0);
     vec4 bathy = texture(uBathy2D, vTexture);
     vec4 shallow = texture(uShallow2D, vTexture);
-    vec4 clouds = texture(uClouds2D, vTexture);
+    vec4 clouds = texture(uClouds2D, vTexture + uSpeed * cloudsSpeed);
     vec4 material = mix(bathy, shallow, 0.6) + clouds;
 
     // Ambient

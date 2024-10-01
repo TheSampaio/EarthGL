@@ -27,12 +27,14 @@ private:
     Texture* mEarthBathy;
     Texture* mEarthShallow;
     Texture* mEarthClouds;
+    glm::mat4 mModel;
+    float mCounter;
 
     void GenerateSphereMesh(GLuint resolution, std::vector<Vertex>& vertices, std::vector<glm::uvec3>& indices);
 };
 
 Sandbox::Sandbox()
-    : mCamera(nullptr), mEarthMesh(nullptr), mEarthBathy(nullptr), mEarthShallow(nullptr), mEarthClouds(nullptr)
+    : mCamera(nullptr), mEarthMesh(nullptr), mEarthBathy(nullptr), mEarthShallow(nullptr), mEarthClouds(nullptr), mModel(glm::mat4{ 1.0f })
 {
     Graphics::SetAntiAliasing(true);
     Graphics::SetBackgroundColour(2.0f, 2.0f, 2.0f);
@@ -60,24 +62,27 @@ void Sandbox::OnStart()
     mEarthBathy = new Texture("../../data/texture/diffuse-earth-bathy-4k.jpg", GL_RGB, GL_TEXTURE0);
     mEarthShallow = new Texture("../../data/texture/diffuse-earth-shallow-4k.jpg", GL_RGB, GL_TEXTURE1);
     mEarthClouds = new Texture("../../data/texture/diffuse-earth-clouds-2k.jpg", GL_RGB, GL_TEXTURE2);
+
+    // Set-up the Earth's initial transform
+    mModel = glm::rotate(mModel, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    mModel = glm::rotate(mModel, glm::radians(200.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+    mModel = glm::scale(mModel, 200.0f * glm::vec3(1.0f));
 }
 
 void Sandbox::OnUpdate(float deltaTime)
 {
+    mCounter += deltaTime;
     mCamera->Update(deltaTime);
 
-    // === 3D stuff ===
-    glm::mat4 model = glm::mat4(1.0f);
-
-    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(200.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::scale(model, 200.0f * glm::vec3(1.0f));
-
     // Creates a normal matrix
-    glm::mat4 normalMatrix = glm::transpose(glm::inverse(model));
+    glm::mat4 normalMatrix = glm::transpose(glm::inverse(mModel));
+
+    // Earth's rotation
+    mModel = glm::rotate(mModel, glm::radians(-0.8f  * deltaTime), glm::vec3(0.0f, 0.0f, 1.0f));
 
     Renderer::UseShaderProgram();
-    Renderer::SetUniformMatrix4fv("uModel", model);
+    Renderer::SetUniform1f("uSpeed", mCounter);
+    Renderer::SetUniformMatrix4fv("uModel", mModel);
     Renderer::SetUniformMatrix4fv("uNormalMatrix", normalMatrix);
 }
 

@@ -13,7 +13,6 @@ project("EarthGL")
 # Set C++ standard version
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Vendor libraries
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad")
@@ -68,11 +67,11 @@ if(MSVC)
 endif()
 
 # Set this to ON to ship the game!
-# Delete the "out" folder after changing it if Visual Studio doesn' recognize the change!
+# Delete the "out" folder after changing it if Visual Studio doesn't recognize the change!
 set(SHIPPING_BUILD OFF CACHE BOOL "Make this a shipping build." FORCE)
 
 if(SHIPPING_BUILD)
-    # Setup the resource path for project executable AND remove the option to debug asserts
+    # Setup the resource path for project EXE and remove the option to debug asserts
     target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC PROJECT_RESOURCE_DIR="./resource/")
     target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC SHIPPING_BUILD=1)
 
@@ -83,7 +82,7 @@ if(SHIPPING_BUILD)
     endif()
 
 else()
-    # Setup the resource path for project while in IDE AND add the option to debug asserts
+    # Setup the resource path for project while in IDE and add the option to debug asserts
     target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC PROJECT_RESOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}/resource/")
     target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC SHIPPING_BUILD=0)
 

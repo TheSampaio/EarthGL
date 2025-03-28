@@ -8,6 +8,7 @@ A small 3D scene with the planet Earth in space programmed from scratch with C++
 
 - You'll need CMake to build this project.
 - After CMake installation, clone this repository using the following command:
+
   ```sh
   git clone https://github.com/TheSampaio/EarthGL --recursive
   ```
